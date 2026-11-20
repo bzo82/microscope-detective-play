@@ -37,6 +37,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{o
 .macro-photo{transform:scale(1.12);opacity:0;transition:opacity 1.05s ease,transform 1.55s cubic-bezier(.18,.8,.18,1)}
 .viewport.zoom-out .micro-photo{transform:scale(1);filter:contrast(1) saturate(1)}
 .viewport.show-macro .macro-photo{opacity:1;transform:scale(1)}
+/* Block the previous answer image until the new micrograph has decoded. */
+.viewport.question-reset .layer,.viewport.question-reset .layer-fallback{visibility:hidden!important;transition:none!important}
+
 .layer-fallback{background:linear-gradient(155deg,#26385b,#142348);display:grid;place-items:center;position:absolute;inset:0;transition:opacity 1s;opacity:0}
 .layer-fallback.micro-art{opacity:0;transform:scale(2.45);transition:transform 2.15s cubic-bezier(.16,.8,.18,1),opacity .3s}
 .layer-fallback.macro-art{opacity:0;transform:scale(1.12);transition:transform 1.55s cubic-bezier(.18,.8,.18,1),opacity 1s}
@@ -244,19 +247,29 @@ button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{o
  function activateFallback(type,q){const id=type==='micro'?'microFallback':'macroFallback';$(id).innerHTML=type==='micro'?(illustrations[q.id]||iconMicro(q)):iconMacro(q);$(id).classList.add('active')}
  function setLayer(type,med,q){let img=$(type==='micro'?'microImage':'macroImage');let fall=$(type==='micro'?'microFallback':'macroFallback');fall.classList.remove('active');img.style.visibility='';img.removeAttribute('src');if(med.ok){img.src=med.url;}else{img.style.visibility='hidden';activateFallback(type,q)}return med.ok}
  function setVisualLabel(micro){let q=item();setMode(micro?'מבט מיקרוסקופי':'מבט רגיל');$('zoomBadge').textContent=micro?(scene.mediaReady&&!scene.mediaMicroLoaded?'🎨 איור להמחשה':'🔎 מבט בהגדלה'):(scene.mediaReady&&!scene.mediaMacroLoaded?'🎨 איור של התשובה':'✨ התעלומה נחשפה!');$('visualFoot').textContent=micro?(!scene.mediaMicroLoaded?'הדמיה לימודית - לא צילום מיקרוסקופי':q.imageNote):(`בחיי היום יום: ${q.type}`);setDots(micro?1:3)}
- function clearVisual(){let v=$('viewport');v.classList.remove('zoom-out','show-macro');$('microFallback').classList.remove('active');$('macroFallback').classList.remove('active');$('microImage').style.visibility='';$('macroImage').style.visibility='';setDots(1);setVisualLabel(true)}
+ function clearVisual(){let v=$('viewport');v.classList.add('question-reset');v.classList.remove('zoom-out','show-macro');$('microFallback').classList.remove('active');$('macroFallback').classList.remove('active');$('microImage').removeAttribute('src');$('macroImage').removeAttribute('src');$('microImage').style.visibility='';$('macroImage').style.visibility='';setDots(1);setVisualLabel(true)}
  async function setQuestionMedia(ticket){const q=item(),overlay=$('loadingOverlay');show('loadingOverlay',true);overlay.innerHTML='<div class="loader" aria-hidden="true"></div><span>מכינים את המיקרוסקופ...</span>';
   const [micro,macro]=await Promise.all([resolveRemote(q,'micro'),resolveRemote(q,'macro')]);
   if(ticket!==scene.ticket)return;
   scene.mediaMicroLoaded=setLayer('micro',micro,q);scene.mediaMacroLoaded=setLayer('macro',macro,q);
+  // A loaded URL is not enough: decode the NEW micrograph before exposing the stage.
+  if(scene.mediaMicroLoaded){
+   const decoded=await $('microImage').decode().then(()=>true,()=>false);
+   if(ticket!==scene.ticket)return;
+   if(!decoded){scene.mediaMicroLoaded=false;setLayer('micro',{ok:false},q)}
+  }
+  if(ticket!==scene.ticket)return;
   scene.mediaReady=true;
+  $('viewport').classList.remove('question-reset');
   [...$('answers').children].forEach(b=>b.disabled=false);
+  $('answers').hidden=false;
+  $('hintBtn').hidden=false;
   show('loadingOverlay',false);
-  if(!micro.ok||!macro.ok){$('notice').textContent='בחלק מהתעלומות מוצג איור במקום צילום, עד להשלמת בדיקת התמונות.'}else{$('notice').textContent='צילומי מיקרוסקופ ממקורות מזוהים. בחלק מהצילומים הצבעים מלאכותיים.'}
-  if(!micro.ok){$('zoomBadge').textContent='🎨 איור להמחשה'}
+  if(!scene.mediaMicroLoaded||!scene.mediaMacroLoaded){$('notice').textContent='בחלק מהתעלומות מוצג איור במקום צילום, עד להשלמת בדיקת התמונות.'}else{$('notice').textContent='צילומי מיקרוסקופ ממקורות מזוהים. בחלק מהצילומים הצבעים מלאכותיים.'}
+  if(!scene.mediaMicroLoaded){$('zoomBadge').textContent='🎨 איור להמחשה'}
  }
  function displayWelcome(){clearTimers();scene.phase='welcome';show('loadingOverlay',false);updateChrome();show('welcomeView',true);show('questionView',false);show('resultView',false);show('finishView',false);$('viewport').className='viewport';$('microImage').removeAttribute('src');$('macroImage').removeAttribute('src');$('microFallback').innerHTML=illustrations.onion;$('microFallback').classList.add('active');$('macroFallback').classList.remove('active');setMode('המעבדה הסודית');$('zoomBadge').textContent='🔎 מה מסתתר כאן?';$('visualFoot').textContent='עולם שלם מחכה לך מתחת לעדשה';setDots(1);}
- function displayQuestion(){clearTimers();scene.phase='question';scene.mediaReady=false;scene.mediaMicroLoaded=false;scene.mediaMacroLoaded=false;save();let q=item();updateChrome();clearVisual();show('welcomeView',false);show('resultView',false);show('finishView',false);show('questionView',true);show('revealState',false);show('hintPanel',false);$('hintBtn').hidden=false;scene.hint=false;$('pointsHint').textContent='10 נק׳ בלי רמז';$('questionText').textContent=q.question;
+ function displayQuestion(){clearTimers();scene.phase='question';scene.mediaReady=false;scene.mediaMicroLoaded=false;scene.mediaMacroLoaded=false;save();let q=item();updateChrome();clearVisual();show('welcomeView',false);show('resultView',false);show('finishView',false);show('questionView',true);show('revealState',false);show('hintPanel',false);$('answers').hidden=true;$('hintBtn').hidden=true;scene.hint=false;$('pointsHint').textContent='10 נק׳ בלי רמז';$('questionText').textContent=q.question;
   $('answers').replaceChildren();q.choices.forEach((name,i)=>{let b=document.createElement('button');b.type='button';b.className='answer';b.disabled=true;b.textContent=name;b.setAttribute('aria-label',`תשובה ${i+1}: ${name}`);b.addEventListener('click',()=>choose(i));$('answers').append(b)});
   const ticket=scene.ticket;setQuestionMedia(ticket);let nxt=Q[scene.order[scene.index+1]];if(nxt){resolveRemote(nxt,'micro');resolveRemote(nxt,'macro')}
  }
