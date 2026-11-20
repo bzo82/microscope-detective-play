@@ -1,0 +1,63 @@
+name: Build licensed photo set and deploy game
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: microscope-site
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install image tools
+        run: python -m pip install 'requests>=2.31,<3' 'Pillow>=11,<13'
+      - name: Assemble license-verified images
+        run: python tools/cache_media.py
+      - name: Validate game and image data
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          q=json.loads(pathlib.Path('questions.json').read_text())
+          assets=json.loads(pathlib.Path('assets/manifest.json').read_text())
+          assert len(q)==40 and len({x['id'] for x in q})==40
+          assert all(x['id'] in assets for x in q)
+          for entries in assets.values():
+              for item in entries.values():
+                  assert item['path'].startswith('./assets/') and item['author'] and item['license']
+                  assert pathlib.Path(item['path']).is_file()
+          PY
+      - name: Report cached images
+        uses: actions/upload-artifact@v4
+        with:
+          name: microscope-image-validation-report
+          path: assets/report.json
+      - name: Package only publicly served application assets
+        run: |
+          mkdir -p dist/assets
+          cp index.html manifest.webmanifest sw.js icon.svg dist/
+          cp assets/manifest.json assets/report.json dist/assets/
+          find assets -maxdepth 1 -type f -name '*.jpg' -exec cp {} dist/assets/ \;
+          touch dist/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
