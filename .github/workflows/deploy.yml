@@ -45,6 +45,17 @@ jobs:
         run: |
           mkdir -p dist/assets
           cp index.html manifest.webmanifest sw.js icon.svg dist/
+          python - <<'PY'
+          from PIL import Image,ImageDraw
+          for size in (192,512):
+              im=Image.new('RGB',(size,size),'#101a38')
+              d=ImageDraw.Draw(im)
+              c=size//2
+              d.ellipse((size*.19,size*.13,size*.73,size*.67),fill='#e9f6ff',outline='#9b81eb',width=max(5,size//25))
+              d.ellipse((size*.35,size*.29,size*.57,size*.51),fill='#39c7bd')
+              d.line((size*.67,size*.64,size*.85,size*.83),fill='#ffcf5e',width=max(8,size//10))
+              im.save(f'dist/icon-{size}.png')
+          PY
           cp assets/manifest.json assets/report.json dist/assets/
           find assets -maxdepth 1 -type f -name '*.jpg' -exec cp {} dist/assets/ \;
           touch dist/.nojekyll
