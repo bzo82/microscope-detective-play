@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#101a38">
 <meta name="description" content="בלשית המיקרוסקופ - משחק גילוי אינטראקטיבי לילדים, עם צילומי מיקרוסקופ אמיתיים וחשיפה חלקה.">
-<title>בלשית המיקרוסקופ | 40 תעלומות</title>
+<title>מתחת לעדשה | אטלס זעיר</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <style>
 :root{
@@ -100,67 +100,160 @@ button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{o
 
 .level-pick{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0 18px}.level-pick button{border:1px solid #d6d8ef;background:#f5f3ff;color:#4d447e;border-radius:12px;padding:9px 13px;font-size:14px;font-weight:750}.level-pick button[aria-pressed="true"]{background:#705bdf;color:white;border-color:#705bdf}
 .feedback-tag{background:#f3f0ff;color:#6250ad;border-radius:10px;padding:7px 12px;font-weight:800;display:inline-block;font-size:12px}.visual-note{font-size:11px;color:#c9d3e9;padding:4px 20px 12px}
+
+/* Editorial field-guide design: restrained, photographic, quiet. */
+:root{
+ --ink:#252a26;--muted:#747b74;--navy:#17231e;--violet:#b05a3c;--violet-dark:#85472f;
+ --mint:#9aab93;--paper:#ffffff;--canvas:#f4f2ec;--line:#d8dcd5;--shadow:none;
+ color:var(--ink);background:var(--canvas);
+}
+body{background:var(--canvas)}
+.app{max-width:1180px;padding:25px 30px 70px}
+.mast{padding-bottom:17px;border-bottom:1px solid #d8dcd5;margin-bottom:29px}
+.brand{gap:11px}.mark{width:44px;height:44px;border-radius:0;background:none;box-shadow:none;font-family:Georgia,serif;font-size:34px;font-weight:400;color:#ae5838}
+.brand h1{font-weight:750;font-size:25px;letter-spacing:-1.1px}.brand p{color:#8a8f85;letter-spacing:0;font-size:12px;font-weight:500;margin-top:0}
+.icon-btn{width:auto;height:38px;padding:0 13px;background:transparent;border:1px solid #d2d8d0;box-shadow:none;border-radius:4px;font-size:12px;font-weight:650}
+.icon-btn:active{background:#e6e9e0}
+.game-layout{grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);gap:35px;align-items:start}
+.visual-card{background:#17231e;border:0;border-radius:5px;box-shadow:none}
+.visual-head{padding:17px 20px 15px;border-bottom:1px solid #ffffff25}
+.visual-eyebrow{color:#b4c0b5;font-size:11px;font-weight:600;letter-spacing:.25px}
+.mode-pill{border:0;background:transparent;border-radius:0;padding:0;color:#e4e9dc;font-size:12px;font-weight:450}
+.viewport{aspect-ratio:1.05;background:#1b2821}
+.viewport:before{inset:9% 10%;border-color:#ffffff3a;border-width:1px;border-radius:50%;opacity:.36}
+.viewport:after{font-family:monospace;font-size:17px;font-weight:200;color:#ffffff7a}
+.vignette{background:radial-gradient(ellipse at center,transparent 55%,#111e17a0 100%)}
+.photo-badge{top:14px;right:16px;padding:6px 10px;background:#17231eab;border:1px solid #ffffff40;border-radius:3px;font-size:11px;letter-spacing:.1px;font-weight:550;backdrop-filter:none}
+.loading-overlay{background:#19241e;color:#e3e8dc;gap:15px;font-size:13px}
+.loader{height:23px;width:23px;border-width:2px;border-top-color:#d8a783}
+.layer-fallback{background:#1d2c26}
+.visual-foot{padding:14px 19px 17px;border-top:1px solid #ffffff1d}
+.visual-foot .small{color:#b6bdb2;font-size:11px}
+.scene-dots{gap:4px}.scene-dots i{height:3px;width:12px;border-radius:0;background:#47574b}.scene-dots i.on{width:18px;background:#d3a07c}
+.control-card{background:transparent;border:0;border-radius:0;box-shadow:none;padding:0;min-width:0}
+.control-top{padding-bottom:13px;border-bottom:1px solid #d5d9d2}
+.challenge-no{font-size:13px;color:#6b7468;font-weight:600;letter-spacing:0}
+.score-bubble{background:transparent;border-radius:0;padding:0;color:#626a5f;font-size:13px;font-weight:650}
+.score-bubble #score{font-size:19px;color:#232e26;font-weight:800}
+.trail{gap:4px;margin:14px 0 31px}.trail span{height:3px;border-radius:0;background:#d9ddd5}.trail .past{background:#858f79}.trail .now{background:#af5a3b}
+.question-label{background:transparent;color:#a35e40;padding:0;border-radius:0;font-size:12px;font-weight:750}
+.question{font-size:clamp(29px,3.25vw,42px);font-weight:750;line-height:1.18;letter-spacing:-1.5px;margin:15px 0 12px;max-width:500px}
+.sub-question{font-size:14px;color:#858a81;margin:0 0 27px}
+.answers{grid-template-columns:1fr 1fr;gap:10px}
+.answer{background:#fafaf7;border:1px solid #ced3ca;border-radius:5px;box-shadow:none;min-height:69px;font-size:15px;font-weight:600;padding:12px 14px;color:#28302a;transition:background .15s,border-color .15s,transform .15s}
+@media(hover:hover){.answer:not(:disabled):hover{transform:none;background:#e9ede5;border-color:#637562}}
+.answer:active:not(:disabled){transform:scale(.985);box-shadow:none}
+.answer:disabled{opacity:.6}
+.answer.correct{background:#e3ece2;border-color:#72947a;color:#285b3d;box-shadow:none;opacity:1}
+.answer.wrong{background:#f5e6e1;border-color:#b77c65;color:#87452c;box-shadow:none;opacity:1}
+.under-actions{margin-top:19px}.hint-btn,.text-btn{color:#975338;font-weight:650;font-size:13px;padding:8px 0}
+.hint-note{color:#8d9189;font-size:12px}
+.hint-panel{background:#f2eee2;border:0;border-right:2px solid #ae8c56;color:#4f5346;border-radius:0;margin-top:10px;padding:13px 16px;font-size:14px}
+.reveal-state{background:transparent;color:#677568;border-radius:0;border-top:1px solid #d6dbd0;margin-top:20px;padding:14px 0;text-align:right;font-weight:500;justify-content:flex-start}
+.result{background:transparent;border:0;border-radius:0;padding:19px 0 13px;margin-top:3px}
+.result.wrong-result{background:transparent;border:0}
+.result .headline{font-size:26px;font-weight:740;letter-spacing:-.7px;color:#27382b}
+.result.wrong-result .headline{color:#704f3d}
+.result .fact{color:#555f53;font-size:15px;line-height:1.85;margin-top:14px}
+.comparison{gap:7px;margin:22px 0 0}
+.chip-btn{border:1px solid #d3d7cf;border-radius:4px;background:transparent;font-size:12px;padding:9px 12px;color:#687267;font-weight:600}
+.chip-btn.selected{border-color:#2b4030;background:#e7ebe5;color:#253d2d}
+.main-action{background:#273e32;box-shadow:none;border-radius:4px;min-height:57px;margin-top:25px;font-size:15px;font-weight:680;transition:background .2s}
+.main-action:hover{background:#375842}.main-action:active{transform:none;box-shadow:none}
+.notice{font-size:11px;line-height:1.65;color:#9b9f97;margin-top:19px;text-align:right}
+.welcome{padding:12px 0 8px}.welcome-emoji{display:none}
+.welcome h2{font-size:clamp(34px,3.5vw,46px);line-height:1.18;letter-spacing:-1.6px;margin:19px 0 15px;font-weight:730}
+.welcome p{font-size:15px;line-height:1.95;color:#677165}
+.stats-line{gap:0;margin:28px 0 30px;border-top:1px solid #d7ddd4;border-bottom:1px solid #d7ddd4}
+.stat{background:transparent;border-radius:0;padding:18px 9px;text-align:right}
+.stat:not(:last-child){border-left:1px solid #d7ddd4}
+.stat strong{font-size:25px;font-weight:690}.stat span{font-size:11px;color:#858e82;margin-top:3px}
+.level-pick{gap:6px;margin:12px 0 10px}
+.level-pick button{border:1px solid #cfd5ca;background:transparent;color:#616b5e;border-radius:4px;padding:10px 12px;font-size:12px;font-weight:600}
+.level-pick button[aria-pressed="true"]{background:#2e4538;border-color:#2e4538;color:#fff}
+.finish{text-align:right;padding:15px 0 0}.medal{font-size:46px;color:#ab593b;animation:none}
+.finish h2{font-size:35px;font-weight:720;margin:8px 0}.big-score{font-size:51px;color:#2b4030;font-weight:700}
+.finish .summary{font-size:15px;color:#6c7369}
+.sticker-list{justify-content:stretch;gap:0;border-top:1px solid #d3d8cf;border-bottom:1px solid #d3d8cf;margin-top:25px}
+.sticker{background:transparent;border:0;border-radius:0;padding:16px 8px;min-width:0;flex:1;text-align:right}
+.sticker:not(:last-child){border-left:1px solid #d3d8cf}.sticker b{font-size:24px;font-weight:690}.sticker span{font-weight:500}
+.attribution{border:0;border-top:1px solid #d7ddd5;background:transparent;margin-top:33px;border-radius:0;padding:17px 0;font-size:12px}
+.attribution summary{font-weight:580;color:#767d74}.attribution a{color:#87513a}
+.feedback-tag{background:transparent;color:#8f6348;border-radius:0}
+.visual-note{color:#bbc6b8}
+@media(max-width:800px){
+ .app{max-width:640px;padding:13px 15px 50px}
+ .mast{margin-bottom:18px;padding-bottom:12px}.brand h1{font-size:21px}.mark{font-size:30px;width:32px;height:36px}
+ .game-layout{grid-template-columns:1fr;gap:20px}.visual-card{border-radius:3px}.visual-head{padding:12px 13px}
+ .viewport{aspect-ratio:1.48}.visual-foot{padding:10px 13px}
+ .control-card{padding:0}.trail{margin:11px 0 23px}
+ .question{font-size:32px;margin:10px 0 10px}.sub-question{margin-bottom:17px}
+ .answer{min-height:61px;font-size:14px}.result{padding:14px 0}
+ .welcome h2{font-size:37px;margin:15px 0}.welcome p{font-size:14px}
+ .stats-line{margin:17px 0 21px}.stat{padding:13px 6px}
+}
+@media(max-width:410px){.brand h1{font-size:19px}.brand p{font-size:10px}.icon-btn{padding:0 9px;font-size:11px}.viewport{aspect-ratio:1.37}.answers{gap:8px}.answer{padding:11px 7px;font-size:14px}}
 </style>
 </head>
 <body>
 <div class="app">
   <header class="mast">
-   <div class="brand"><div class="mark" aria-hidden="true">🔬</div><div><h1>בלשית המיקרוסקופ</h1><p>המעבדה הסודית · גילאי 7–10</p></div></div>
+   <div class="brand"><div class="mark" aria-hidden="true">◎</div><div><h1>מתחת לעדשה</h1><p>אטלס של עולמות קטנים</p></div></div>
    <nav class="toolbar" aria-label="כלי המשחק">
-    <button class="icon-btn" id="speakBtn" type="button" aria-label="הקריאי את השאלה" title="הקריאי את השאלה">🔊</button>
-    <button class="icon-btn" id="resetBtn" type="button" aria-label="חזרה להתחלה" title="חזרה להתחלה">↺</button>
+    <button class="icon-btn" id="speakBtn" type="button" aria-label="הקריאי את השאלה" title="הקריאי את השאלה">הקראה</button>
+    <button class="icon-btn" id="resetBtn" type="button" aria-label="חזרה להתחלה" title="חזרה להתחלה">התחלה</button>
    </nav>
   </header>
   <main class="game-layout">
    <section class="visual-card" aria-label="מבט דרך המיקרוסקופ">
-    <div class="visual-head"><div class="visual-eyebrow">✦ מעבדת התעלומות</div><div class="mode-pill" id="modeText">מבט מיקרוסקופי</div></div>
+    <div class="visual-head"><div class="visual-eyebrow">אוסף מספר 01 / הטבע מקרוב</div><div class="mode-pill" id="modeText">מבט מקרוב</div></div>
     <div class="viewport" id="viewport">
       <img class="layer micro-photo" id="microImage" alt="תמונת מיקרוסקופ לתעלומה" decoding="async" referrerpolicy="no-referrer">
       <div class="layer-fallback micro-art" id="microFallback" aria-hidden="true"></div>
       <img class="layer macro-photo" id="macroImage" alt="התמונה כפי שהיא נראית בחיי היום יום" decoding="async" referrerpolicy="no-referrer">
       <div class="layer-fallback macro-art" id="macroFallback" aria-hidden="true"></div>
       <div class="vignette" aria-hidden="true"></div>
-      <div class="photo-badge" id="zoomBadge">🔎 מבעד לעדשה</div>
+      <div class="photo-badge" id="zoomBadge">תקריב</div>
       <div class="loading-overlay" id="loadingOverlay" role="status" aria-live="polite"><div class="loader" aria-hidden="true"></div><span>מכינים את המיקרוסקופ...</span></div>
     </div>
     <div class="visual-foot"><span class="small" id="visualFoot">הצילום לא בהכרח מציג צבעים טבעיים</span><div class="scene-dots" aria-hidden="true"><i class="on" id="dot1"></i><i id="dot2"></i><i id="dot3"></i></div></div>
    </section>
    <section class="control-card" aria-label="משחק התעלומות">
-    <div class="control-top"><div class="challenge-no" id="challengeNo">מוכנה למשימה?</div><div class="score-bubble">⭐ <span id="score">0</span> <span aria-label="נקודות">נק׳</span></div></div>
+    <div class="control-top"><div class="challenge-no" id="challengeNo">מוכנה למשימה?</div><div class="score-bubble"><span id="score">0</span> <span aria-label="נקודות">נקודות</span></div></div>
     <div class="trail" id="trail" aria-label="התקדמות במשחק"></div>
     <section id="welcomeView" class="welcome">
-      <div class="welcome-emoji">🕵️‍♀️</div><span class="question-label">40 תעלומות · צילומים ממקורות מזוהים · שלוש רמות</span>
-      <h2>מה מסתתר<br>מתחת לעדשה?</h2>
-      <p>לכל דבר יש סוד קטן. תסתכלי על התמונה המוגדלת, בחרי מה את חושבת שאת רואה, ואז המיקרוסקופ יתרחק ויגלה את התשובה!</p>
-      <div class="stats-line"><div class="stat"><strong>40</strong><span>במאגר</span></div><div class="stat"><strong>10</strong><span>בכל סיבוב</span></div><div class="stat"><strong>🔍</strong><span>זום קסום</span></div></div>
-      <div class="small">בחרי רמת קושי:</div><div class="level-pick" id="levelPicker"><button type="button" data-level="all" aria-pressed="true">🎲 מעורב</button><button type="button" data-level="1" aria-pressed="false">🌱 קל</button><button type="button" data-level="2" aria-pressed="false">🔬 בינוני</button><button type="button" data-level="3" aria-pressed="false">🧠 מתקדם</button></div>
-      <button class="main-action" id="startBtn" type="button">אני מוכנה, מתחילים! ✨</button>
+      <span class="question-label">40 צילומים · 3 דרגות קושי</span>
+      <h2>כמה העולם<br>גדול כשמתקרבים.</h2>
+      <p>זהי דברים מוכרים מנקודת מבט לא מוכרת. בכל סיבוב מחכים לך עשרה צילומים. אחרי הניחוש - מתרחקים ורואים את התמונה השלמה.</p>
+      <div class="stats-line"><div class="stat"><strong>40</strong><span>בעולם הזעיר</span></div><div class="stat"><strong>10</strong><span>בכל מסע</span></div><div class="stat"><strong>3</strong><span>רמות</span></div></div>
+      <div class="small">מאיפה מתחילים?</div><div class="level-pick" id="levelPicker"><button type="button" data-level="all" aria-pressed="true">הכול יחד</button><button type="button" data-level="1" aria-pressed="false">מתחילים</button><button type="button" data-level="2" aria-pressed="false">סקרנים</button><button type="button" data-level="3" aria-pressed="false">מגלים</button></div>
+      <button class="main-action" id="startBtn" type="button">מתחילים לחקור</button>
     </section>
     <section id="questionView" hidden>
-      <span class="question-label">👀 הסתכלי היטב בתמונה</span>
+      <span class="question-label">התבונני בפרטים</span>
       <h2 class="question" id="questionText">מה מסתתר כאן?</h2>
-      <p class="sub-question">בחרי תשובה אחת כדי לחשוף את הסוד.</p>
+      <p class="sub-question">מה לדעתך מצולם כאן?</p>
       <div class="answers" id="answers"></div>
-      <div class="under-actions"><button class="hint-btn" id="hintBtn" type="button">💡 תני לי רמז</button><span class="hint-note" id="pointsHint">10 נק׳ בלי רמז</span></div>
+      <div class="under-actions"><button class="hint-btn" id="hintBtn" type="button">אפשר רמז?</button><span class="hint-note" id="pointsHint">10 נק׳ בלי רמז</span></div>
       <div class="hint-panel" id="hintPanel" hidden></div>
       <div class="reveal-state" id="revealState" hidden><span aria-hidden="true">✨</span> המיקרוסקופ מתרחק... מגלים!</div>
     </section>
     <section id="resultView" hidden>
-      <span class="question-label">🌟 הסוד נחשף</span>
+      <span class="question-label">הצילום נחשף</span>
       <div class="result" id="resultBox"><div class="headline" id="resultHeadline"></div><p class="fact" id="resultFact"></p></div>
       <div class="comparison" role="group" aria-label="השוואת התמונות">
-       <button class="chip-btn" type="button" id="showMicroBtn">🔬 לראות במיקרוסקופ</button>
-       <button class="chip-btn selected" type="button" id="showMacroBtn">👁️ לראות במציאות</button>
-       <button class="chip-btn" type="button" id="replayBtn">↻ לצפות שוב בזום</button>
+       <button class="chip-btn" type="button" id="showMicroBtn">מקרוב</button>
+       <button class="chip-btn selected" type="button" id="showMacroBtn">מרחוק</button>
+       <button class="chip-btn" type="button" id="replayBtn">שוב את המעבר</button>
       </div>
-      <button class="main-action" id="nextBtn" type="button">לתעלומה הבאה ←</button>
+      <button class="main-action" id="nextBtn" type="button">לצילום הבא ←</button>
     </section>
     <section id="finishView" class="finish" hidden>
-      <span class="medal" aria-hidden="true">🏆</span><h2 id="finishTitle">אלופת המיקרוסקופ!</h2>
+      <span class="medal" aria-hidden="true">◎</span><h2 id="finishTitle">אלופת המיקרוסקופ!</h2>
       <div class="big-score" id="finalScore">0 / 50</div>
       <p class="summary" id="finishSummary">כל הכבוד, גילית דברים מדהימים!</p>
       <div class="sticker-list"><div class="sticker"><b id="correctCount">0</b><span>זיהויים נכונים</span></div><div class="sticker"><b id="hintCount">0</b><span>רמזים</span></div><div class="sticker"><b id="bestScore">0</b><span>שיא אישי</span></div></div>
-      <button class="main-action" id="restartBtn" type="button">🔬 משחק חדש</button>
+      <button class="main-action" id="restartBtn" type="button">מסע נוסף</button>
     </section>
     <div class="notice" id="notice">40 תעלומות עם מקורות צילום מזוהים. אם צילום אינו זמין, מוצגת הדמיה לימודית המסומנת בבירור.</div>
    </section>
@@ -246,7 +339,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{o
  function imageExists(url,ms=3500){return new Promise(resolve=>{const im=new Image();let end=false;const t=setTimeout(()=>{if(!end){end=true;resolve(false)}},ms);im.onload=()=>{if(!end){end=true;clearTimeout(t);resolve(true)}};im.onerror=()=>{if(!end){end=true;clearTimeout(t);resolve(false)}};im.src=url})}
  function activateFallback(type,q){const id=type==='micro'?'microFallback':'macroFallback';$(id).innerHTML=type==='micro'?(illustrations[q.id]||iconMicro(q)):iconMacro(q);$(id).classList.add('active')}
  function setLayer(type,med,q){let img=$(type==='micro'?'microImage':'macroImage');let fall=$(type==='micro'?'microFallback':'macroFallback');fall.classList.remove('active');img.style.visibility='';img.removeAttribute('src');if(med.ok){img.src=med.url;}else{img.style.visibility='hidden';activateFallback(type,q)}return med.ok}
- function setVisualLabel(micro){let q=item();setMode(micro?'מבט מיקרוסקופי':'מבט רגיל');$('zoomBadge').textContent=micro?(scene.mediaReady&&!scene.mediaMicroLoaded?'🎨 איור להמחשה':'🔎 מבט בהגדלה'):(scene.mediaReady&&!scene.mediaMacroLoaded?'🎨 איור של התשובה':'✨ התעלומה נחשפה!');$('visualFoot').textContent=micro?(!scene.mediaMicroLoaded?'הדמיה לימודית - לא צילום מיקרוסקופי':q.imageNote):(`בחיי היום יום: ${q.type}`);setDots(micro?1:3)}
+ function setVisualLabel(micro){let q=item();setMode(micro?'מבט מיקרוסקופי':'מבט רגיל');$('zoomBadge').textContent=micro?(scene.mediaReady&&!scene.mediaMicroLoaded?'הדמיה':'תקריב'):(scene.mediaReady&&!scene.mediaMacroLoaded?'הדמיה':'התמונה השלמה');$('visualFoot').textContent=micro?(!scene.mediaMicroLoaded?'הדמיה לימודית - לא צילום מיקרוסקופי':q.imageNote):(`בחיי היום יום: ${q.type}`);setDots(micro?1:3)}
  function clearVisual(){let v=$('viewport');v.classList.add('question-reset');v.classList.remove('zoom-out','show-macro');$('microFallback').classList.remove('active');$('macroFallback').classList.remove('active');$('microImage').removeAttribute('src');$('macroImage').removeAttribute('src');$('microImage').style.visibility='';$('macroImage').style.visibility='';setDots(1);setVisualLabel(true)}
  async function setQuestionMedia(ticket){const q=item(),overlay=$('loadingOverlay');show('loadingOverlay',true);overlay.innerHTML='<div class="loader" aria-hidden="true"></div><span>מכינים את המיקרוסקופ...</span>';
   const [micro,macro]=await Promise.all([resolveRemote(q,'micro'),resolveRemote(q,'macro')]);
@@ -266,9 +359,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{o
   $('hintBtn').hidden=false;
   show('loadingOverlay',false);
   if(!scene.mediaMicroLoaded||!scene.mediaMacroLoaded){$('notice').textContent='בחלק מהתעלומות מוצג איור במקום צילום, עד להשלמת בדיקת התמונות.'}else{$('notice').textContent='צילומי מיקרוסקופ ממקורות מזוהים. בחלק מהצילומים הצבעים מלאכותיים.'}
-  if(!scene.mediaMicroLoaded){$('zoomBadge').textContent='🎨 איור להמחשה'}
+  if(!scene.mediaMicroLoaded){$('zoomBadge').textContent='הדמיה'}
  }
- function displayWelcome(){clearTimers();scene.phase='welcome';show('loadingOverlay',false);updateChrome();show('welcomeView',true);show('questionView',false);show('resultView',false);show('finishView',false);$('viewport').className='viewport';$('microImage').removeAttribute('src');$('macroImage').removeAttribute('src');$('microFallback').innerHTML=illustrations.onion;$('microFallback').classList.add('active');$('macroFallback').classList.remove('active');setMode('המעבדה הסודית');$('zoomBadge').textContent='🔎 מה מסתתר כאן?';$('visualFoot').textContent='עולם שלם מחכה לך מתחת לעדשה';setDots(1);}
+ function displayWelcome(){clearTimers();scene.phase='welcome';show('loadingOverlay',false);updateChrome();show('welcomeView',true);show('questionView',false);show('resultView',false);show('finishView',false);$('viewport').className='viewport';$('microImage').removeAttribute('src');$('macroImage').removeAttribute('src');$('microFallback').innerHTML=illustrations.onion;$('microFallback').classList.add('active');$('macroFallback').classList.remove('active');setMode('אוסף התצלומים');$('zoomBadge').textContent='תקריב';$('visualFoot').textContent='מבט מקרוב על דברים מוכרים';setDots(1);}
  function displayQuestion(){clearTimers();scene.phase='question';scene.mediaReady=false;scene.mediaMicroLoaded=false;scene.mediaMacroLoaded=false;save();let q=item();updateChrome();clearVisual();show('welcomeView',false);show('resultView',false);show('finishView',false);show('questionView',true);show('revealState',false);show('hintPanel',false);$('answers').hidden=true;$('hintBtn').hidden=true;scene.hint=false;$('pointsHint').textContent='10 נק׳ בלי רמז';$('questionText').textContent=q.question;
   $('answers').replaceChildren();q.choices.forEach((name,i)=>{let b=document.createElement('button');b.type='button';b.className='answer';b.disabled=true;b.textContent=name;b.setAttribute('aria-label',`תשובה ${i+1}: ${name}`);b.addEventListener('click',()=>choose(i));$('answers').append(b)});
   const ticket=scene.ticket;setQuestionMedia(ticket);let nxt=Q[scene.order[scene.index+1]];if(nxt){resolveRemote(nxt,'micro');resolveRemote(nxt,'macro')}
@@ -276,26 +369,26 @@ button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{o
  function choose(index){if(scene.phase!=='question'||!scene.mediaReady)return;scene.phase='revealing';const q=item(),ok=index===q.correct,points=ok?(scene.hint?7:10):0;scene.score+=points;
   scene.records[q.id]={selected:index,correct:ok,points,hint:scene.hint};save();updateChrome();
   const buttons=[...$('answers').children];buttons.forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');if(i===index&&!ok)b.classList.add('wrong')});
-  $('hintBtn').hidden=true;show('revealState',true);$('revealState').textContent='✨ המיקרוסקופ מתרחק... מגלים!';setMode('מתרחקים...');animateReveal(()=>{scene.phase='answered';save();show('questionView',false);renderResult();announce((ok?'כל הכבוד! ':'ניסיון יפה. ')+'התשובה היא '+q.choices[q.correct])});
+  $('hintBtn').hidden=true;show('revealState',true);$('revealState').textContent='מתרחקים מהצילום...';setMode('מתרחקים...');animateReveal(()=>{scene.phase='answered';save();show('questionView',false);renderResult();announce((ok?'כל הכבוד! ':'ניסיון יפה. ')+'התשובה היא '+q.choices[q.correct])});
  }
- function animateReveal(onFinished){clearTimers();let token=scene.ticket,v=$('viewport');v.classList.remove('zoom-out','show-macro');void v.offsetWidth;setDots(1);$('zoomBadge').textContent='🔎 מתרחקים...';
+ function animateReveal(onFinished){clearTimers();let token=scene.ticket,v=$('viewport');v.classList.remove('zoom-out','show-macro');void v.offsetWidth;setDots(1);$('zoomBadge').textContent='מתרחקים...';
   const t1=reduceMotion?0:55,t2=reduceMotion?0:2100,t3=reduceMotion?25:3150;
   delay(()=>{if(token!==scene.ticket)return;v.classList.add('zoom-out');setDots(2)},t1);
   delay(()=>{if(token!==scene.ticket)return;v.classList.add('show-macro');setVisualLabel(false)},t2);
   delay(()=>{if(token!==scene.ticket)return;onFinished&&onFinished()},t3);
  }
  function renderResult(){let q=item(),r=scene.records[q.id];updateChrome();show('resultView',true);show('welcomeView',false);show('questionView',false);show('finishView',false);let ok=r.correct;$('resultBox').classList.toggle('wrong-result',!ok);
-  $('resultHeadline').textContent=ok?`נכון מאוד! +${r.points} נקודות 🌟`:`איזה גילוי! זה ${q.choices[q.correct]} 💜`;
-  $('resultFact').textContent=q.fact;$('nextBtn').textContent=scene.index===roundLength()-1?'למסך הסיום 🏆':'לתעלומה הבאה ←';showMacroView();
+  $('resultHeadline').textContent=ok?`זיהית נכון · ${r.points} נקודות`:`זו הייתה ${q.choices[q.correct]}`;
+  $('resultFact').textContent=q.fact;$('nextBtn').textContent=scene.index===roundLength()-1?'לסיכום המסע':'לצילום הבא ←';showMacroView();
  }
  function showMacroView(){const v=$('viewport');v.classList.add('zoom-out','show-macro');$('showMicroBtn').classList.remove('selected');$('showMacroBtn').classList.add('selected');setVisualLabel(false)}
  function showMicroView(){const v=$('viewport');v.classList.add('zoom-out');v.classList.remove('show-macro');$('showMicroBtn').classList.add('selected');$('showMacroBtn').classList.remove('selected');setVisualLabel(true)}
  function replay(){if(scene.phase!=='answered')return;scene.phase='replaying';show('resultView',false);show('revealState',true);show('questionView',true);$('questionText').textContent='הנה החשיפה שוב!';$('answers').replaceChildren();$('hintBtn').hidden=true;$('pointsHint').textContent='';$('revealState').textContent='✨ מהתקריב אל העולם שבחוץ';animateReveal(()=>{scene.phase='answered';show('questionView',false);renderResult()})}
  function next(){if(scene.phase!=='answered')return;if(scene.index===roundLength()-1){complete();return;}scene.index++;displayQuestion()}
- function complete(){clearTimers();scene.phase='finished';safeStore(BEST,Math.max(best(),scene.score));save();updateChrome();show('welcomeView',false);show('questionView',false);show('resultView',false);show('finishView',true);$('viewport').classList.add('zoom-out','show-macro');setMode('כל התעלומות נפתרו!');$('zoomBadge').textContent='🏆 סיימנו!';
+ function complete(){clearTimers();scene.phase='finished';safeStore(BEST,Math.max(best(),scene.score));save();updateChrome();show('welcomeView',false);show('questionView',false);show('resultView',false);show('finishView',true);$('viewport').classList.add('zoom-out','show-macro');setMode('המסע הושלם');$('zoomBadge').textContent='סיום המסע';
   let values=Object.values(scene.records),right=values.filter(v=>v.correct).length,hints=values.filter(v=>v.hint).length;
   $('finalScore').textContent=`${scene.score} / ${roundLength()*10}`;$('correctCount').textContent=right;$('hintCount').textContent=hints;$('bestScore').textContent=best();
-  $('finishTitle').textContent=right===roundLength()?'אלופת המיקרוסקופ!':right>=3?'חוקרת טבע מדהימה!':'בלשית אמיצה!';
+  $('finishTitle').textContent=right===roundLength()?'ראית את הכול מקרוב':right>=3?'סיימת מסע של גילויים':'סיימת את המסע';
   $('finishSummary').textContent=right===roundLength()?'זיהית את כל התעלומות! העולם הזעיר כבר פחות מסתורי.':`פתרת ${right} מתוך ${roundLength()} תעלומות. גם כשלא מנחשים נכון, לומדים משהו חדש!`;
   announce('סיימת את המשחק, קיבלת '+scene.score+' נקודות');
  }
