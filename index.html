@@ -369,7 +369,7 @@ body{background:var(--canvas)}
  function choose(index){if(scene.phase!=='question'||!scene.mediaReady)return;scene.phase='revealing';const q=item(),ok=index===q.correct,points=ok?(scene.hint?7:10):0;scene.score+=points;
   scene.records[q.id]={selected:index,correct:ok,points,hint:scene.hint};save();updateChrome();
   const buttons=[...$('answers').children];buttons.forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');if(i===index&&!ok)b.classList.add('wrong')});
-  $('hintBtn').hidden=true;show('revealState',true);$('revealState').textContent='מתרחקים מהצילום...';setMode('מתרחקים...');animateReveal(()=>{scene.phase='answered';save();show('questionView',false);renderResult();announce((ok?'כל הכבוד! ':'ניסיון יפה. ')+'התשובה היא '+q.choices[q.correct])});
+  $('hintBtn').hidden=true;show('revealState',true);$('revealState').textContent='מתרחקים מהצילום...';setMode('מתרחקים...');animateReveal(()=>{scene.phase='answered';save();show('questionView',false);renderResult();announce((ok?'זיהית נכון. ':'התשובה היא ')+q.choices[q.correct])});
  }
  function animateReveal(onFinished){clearTimers();let token=scene.ticket,v=$('viewport');v.classList.remove('zoom-out','show-macro');void v.offsetWidth;setDots(1);$('zoomBadge').textContent='מתרחקים...';
   const t1=reduceMotion?0:55,t2=reduceMotion?0:2100,t3=reduceMotion?25:3150;
@@ -390,7 +390,7 @@ body{background:var(--canvas)}
   $('finalScore').textContent=`${scene.score} / ${roundLength()*10}`;$('correctCount').textContent=right;$('hintCount').textContent=hints;$('bestScore').textContent=best();
   $('finishTitle').textContent=right===roundLength()?'ראית את הכול מקרוב':right>=3?'סיימת מסע של גילויים':'סיימת את המסע';
   $('finishSummary').textContent=right===roundLength()?'זיהית את כל התעלומות! העולם הזעיר כבר פחות מסתורי.':`פתרת ${right} מתוך ${roundLength()} תעלומות. גם כשלא מנחשים נכון, לומדים משהו חדש!`;
-  announce('סיימת את המשחק, קיבלת '+scene.score+' נקודות');
+  announce('המסע הסתיים. צברת '+scene.score+' נקודות');
  }
  function reset(){clearTimers();scene.index=0;scene.score=0;scene.records={};scene.hint=false;scene.order=newOrder();displayWelcome();save()}
  function speak(){if(!('speechSynthesis' in window)){announce('אין תמיכה בהקראה במכשיר זה');return;}window.speechSynthesis.cancel();let text;if(scene.phase==='welcome')text='בלשית המיקרוסקופ! האם את מוכנה לתעלומות?';else if(scene.phase==='answered')text=item().fact;else if(scene.phase==='question')text=item().question+' '+item().choices.join('. ');else if(scene.phase==='finished')text='כל הכבוד! סיימת את המשחק!';else text='המיקרוסקופ מתרחק ומגלה את התשובה';
