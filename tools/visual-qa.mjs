@@ -7,6 +7,7 @@ for(const [name,viewport] of [['mobile',{width:390,height:844}],['desktop',{widt
  const errors=[];page.on('pageerror',err=>errors.push(err.message));
  await page.goto('https://bzo82.github.io/microscope-detective-play/',{waitUntil:'domcontentloaded',timeout:30000});
  await page.locator('#welcomeView').waitFor({state:'visible',timeout:15000});
+ await page.locator('#loadingOverlay').waitFor({state:'hidden',timeout:30000});
  await page.screenshot({path:'qa-screenshots/'+name+'-welcome.png',fullPage:true});
  await page.locator('#startBtn').click();
  await page.locator('#answers button').first().waitFor({state:'visible',timeout:25000});
