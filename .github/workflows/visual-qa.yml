@@ -1,0 +1,24 @@
+name: Visual QA - editorial design
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser tooling
+        run: |
+          npm install --no-save playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Capture live responsive screenshots
+        run: node tools/visual-qa.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: editorial-preview
+          path: qa-screenshots/
