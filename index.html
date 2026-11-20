@@ -361,7 +361,26 @@ body{background:var(--canvas)}
   if(!scene.mediaMicroLoaded||!scene.mediaMacroLoaded){$('notice').textContent='בחלק מהתעלומות מוצג איור במקום צילום, עד להשלמת בדיקת התמונות.'}else{$('notice').textContent='צילומי מיקרוסקופ ממקורות מזוהים. בחלק מהצילומים הצבעים מלאכותיים.'}
   if(!scene.mediaMicroLoaded){$('zoomBadge').textContent='הדמיה'}
  }
- function displayWelcome(){clearTimers();scene.phase='welcome';show('loadingOverlay',false);updateChrome();show('welcomeView',true);show('questionView',false);show('resultView',false);show('finishView',false);$('viewport').className='viewport';$('microImage').removeAttribute('src');$('macroImage').removeAttribute('src');$('microFallback').innerHTML=illustrations.onion;$('microFallback').classList.add('active');$('macroFallback').classList.remove('active');setMode('אוסף התצלומים');$('zoomBadge').textContent='תקריב';$('visualFoot').textContent='מבט מקרוב על דברים מוכרים';setDots(1);}
+ function displayWelcome(){
+  clearTimers();const ticket=scene.ticket;scene.phase='welcome';updateChrome();
+  show('welcomeView',true);show('questionView',false);show('resultView',false);show('finishView',false);
+  $('viewport').className='viewport question-reset';$('microImage').removeAttribute('src');$('macroImage').removeAttribute('src');
+  $('microFallback').classList.remove('active');$('macroFallback').classList.remove('active');
+  setMode('אוסף התצלומים');$('zoomBadge').textContent='תקריב';$('visualFoot').textContent='צילום מתוך אוסף התעלומות';setDots(1);
+  show('loadingOverlay',true);
+  const cover=Q.find(q=>q.id==='wing')||Q[0];
+  resolveRemote(cover,'micro').then(async photo=>{
+    if(ticket!==scene.ticket||scene.phase!=='welcome')return;
+    if(photo.ok){setLayer('micro',photo,cover);
+      const ready=await $('microImage').decode().then(()=>true,()=>false);
+      if(ticket!==scene.ticket||scene.phase!=='welcome')return;
+      if(!ready)setLayer('micro',{ok:false},cover);
+    }else setLayer('micro',{ok:false},cover);
+    $('viewport').classList.remove('question-reset');show('loadingOverlay',false);
+  }).catch(()=>{if(ticket!==scene.ticket||scene.phase!=='welcome')return;
+    setLayer('micro',{ok:false},cover);$('viewport').classList.remove('question-reset');show('loadingOverlay',false);
+  });
+ }
  function displayQuestion(){clearTimers();scene.phase='question';scene.mediaReady=false;scene.mediaMicroLoaded=false;scene.mediaMacroLoaded=false;save();let q=item();updateChrome();clearVisual();show('welcomeView',false);show('resultView',false);show('finishView',false);show('questionView',true);show('revealState',false);show('hintPanel',false);$('answers').hidden=true;$('hintBtn').hidden=true;scene.hint=false;$('pointsHint').textContent='10 נק׳ בלי רמז';$('questionText').textContent=q.question;
   $('answers').replaceChildren();q.choices.forEach((name,i)=>{let b=document.createElement('button');b.type='button';b.className='answer';b.disabled=true;b.textContent=name;b.setAttribute('aria-label',`תשובה ${i+1}: ${name}`);b.addEventListener('click',()=>choose(i));$('answers').append(b)});
   const ticket=scene.ticket;setQuestionMedia(ticket);let nxt=Q[scene.order[scene.index+1]];if(nxt){resolveRemote(nxt,'micro');resolveRemote(nxt,'macro')}
